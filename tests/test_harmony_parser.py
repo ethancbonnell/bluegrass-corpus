@@ -133,6 +133,71 @@ B:
 """
             )
 
+    def test_section_alias_preserves_distinct_formal_section(self) -> None:
+        data = parse_harmony_text(
+            """% Title: Alias Test
+% TuneID: alias01
+Form: VC
+V:
+1 67 27 27
+57 57 1 1
+C = V
+"""
+        )
+        self.assertEqual(data.form_sections, ["V", "C"])
+        self.assertEqual(data.sections["C"].alias_of, "V")
+        self.assertEqual(
+            [bar.raw for bar in data.sections["C"].bars],
+            [bar.raw for bar in data.sections["V"].bars],
+        )
+        self.assertIsNot(data.sections["C"].bars, data.sections["V"].bars)
+
+    def test_numbered_section_alias_resolves_in_form(self) -> None:
+        data = parse_harmony_text(
+            """% Title: Numbered Alias Test
+% TuneID: alias02
+Form: AABA
+A1:
+1 1 4 4
+A2:
+1 1 5 5
+B:
+4 4 1 1
+A3 = A2
+"""
+        )
+        self.assertEqual(data.form_sections, ["A1", "A2", "B", "A3"])
+        self.assertEqual(data.sections["A3"].alias_of, "A2")
+        self.assertEqual(
+            [bar.raw for bar in data.sections["A3"].bars],
+            [bar.raw for bar in data.sections["A2"].bars],
+        )
+
+    def test_alias_metadata_appears_only_on_alias_in_json_data(self) -> None:
+        data = parse_harmony_text(
+            """% Title: Alias JSON Test
+% TuneID: alias03
+Form: VC
+V:
+1
+C = V
+"""
+        ).to_dict()
+        self.assertNotIn("alias_of", data["sections"]["V"])
+        self.assertEqual(data["sections"]["C"]["alias_of"], "V")
+
+    def test_alias_must_reference_previous_section(self) -> None:
+        with self.assertRaisesRegex(HarmonyParseError, "undefined or later section"):
+            parse_harmony_text(
+                """% Title: Forward Alias Test
+% TuneID: alias04
+Form: VC
+C = V
+V:
+1
+"""
+            )
+
 
 class SyntaxErrorTests(unittest.TestCase):
     def test_compressed_dots_are_rejected(self) -> None:

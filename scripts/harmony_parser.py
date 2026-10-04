@@ -14,6 +14,8 @@ Current v1 assumptions
 * ``% Title: ...`` and ``% TuneID: ...`` are required metadata.
 * ``Form: AABA`` uses one-letter formal types.  Numbered variants such as
   A1/A2/A3 are matched to repeated A occurrences in order.
+* A section may alias an earlier section with ``C = V`` or ``A3 = A2``;
+  aliases remain distinct formal sections while inheriting harmonic bars.
 * Outside parentheses, each whitespace-separated token is one bar.
 * Inside parentheses, each whitespace-separated token is one equal slot in
   the bar.  A chord token creates an onset; ``.`` occupies a slot but creates
@@ -35,6 +37,7 @@ import argparse
 import json
 import re
 import sys
+from copy import deepcopy
 from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass, field
 from fractions import Fraction
@@ -127,10 +130,16 @@ class Bar:
 
 @dataclass
 class Section:
-    """A named harmonic section such as A1, A2, B, or A3."""
+    """A named harmonic section such as A1, A2, B, or A3.
+
+    ``alias_of`` records source-level harmonic inheritance.  An alias is
+    still its own formal section, but its bars are copied from the earlier
+    target section during parsing.
+    """
 
     label: str
     bars: list[Bar] = field(default_factory=list)
+    alias_of: str | None = None
 
 
 @dataclass
@@ -163,6 +172,11 @@ class HarmonyData:
             "sections": {
                 label: {
                     "label": section.label,
+                    **(
+                        {"alias_of": section.alias_of}
+                        if section.alias_of is not None
+                        else {}
+                    ),
                     "bars": [
                         {
                             "number": bar.number,
@@ -201,6 +215,9 @@ class _BarToken:
 _METADATA_RE = re.compile(r"^%\s*([^:]+?)\s*:\s*(.*?)\s*$")
 _FORM_RE = re.compile(r"^Form\s*:\s*(.*?)\s*$", re.IGNORECASE)
 _SECTION_RE = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*)\s*:\s*$")
+_SECTION_ALIAS_RE = re.compile(
+    r"^([A-Za-z][A-Za-z0-9_-]*)\s*=\s*([A-Za-z][A-Za-z0-9_-]*)\s*$"
+)
 
 # A scale-degree string is intentionally a small language.  We accept repeated
 # accidentals because supporting bb7/##4 costs essentially nothing, even if
@@ -581,6 +598,8 @@ def parse_harmony_text(text: str, *, source: str = "<string>") -> HarmonyData:
     metadata: dict[str, str] = {}
     form: str | None = None
     section_lines: dict[str, list[tuple[int, str]]] = {}
+    section_aliases: dict[str, str] = {}
+    section_order: list[str] = []
     current_section: str | None = None
 
     for line_no, original_line in enumerate(text.splitlines(), start=1):
@@ -618,12 +637,37 @@ def parse_harmony_text(text: str, *, source: str = "<string>") -> HarmonyData:
         section_match = _SECTION_RE.fullmatch(stripped)
         if section_match:
             label = section_match.group(1)
-            if label in section_lines:
+            if label in section_lines or label in section_aliases:
                 raise HarmonyParseError(
                     f"duplicate section label {label!r}", line=line_no
                 )
             section_lines[label] = []
+            section_order.append(label)
             current_section = label
+            continue
+
+        alias_match = _SECTION_ALIAS_RE.fullmatch(stripped)
+        if alias_match:
+            label = alias_match.group(1)
+            target = alias_match.group(2)
+
+            if label in section_lines or label in section_aliases:
+                raise HarmonyParseError(
+                    f"duplicate section label {label!r}", line=line_no
+                )
+
+            # Aliases point backward only.  This keeps parsing deterministic and
+            # makes circular references impossible without a separate graph pass.
+            if target not in section_lines and target not in section_aliases:
+                raise HarmonyParseError(
+                    f"section alias {label!r} refers to undefined or later "
+                    f"section {target!r}",
+                    line=line_no,
+                )
+
+            section_aliases[label] = target
+            section_order.append(label)
+            current_section = None
             continue
 
         if current_section is None:
@@ -648,7 +692,17 @@ def parse_harmony_text(text: str, *, source: str = "<string>") -> HarmonyData:
         raise HarmonyParseError("file contains no harmonic sections")
 
     sections: dict[str, Section] = {}
-    for label, lines in section_lines.items():
+    for label in section_order:
+        if label in section_aliases:
+            target = section_aliases[label]
+            sections[label] = Section(
+                label=label,
+                bars=deepcopy(sections[target].bars),
+                alias_of=target,
+            )
+            continue
+
+        lines = section_lines[label]
         bar_tokens = _tokenize_bars(lines, section=label)
         if not bar_tokens:
             raise HarmonyParseError(f"section {label!r} contains no bars")

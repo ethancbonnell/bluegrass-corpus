@@ -100,6 +100,30 @@ bass_explicit   false
 `raw` is deliberately retained even though the token has been parsed. This
 makes later format changes easier to audit against the source transcription.
 
+## Section aliases
+
+If a later formal section has exactly the same harmony as an earlier one, use
+source-level alias syntax instead of copying the bars:
+
+```text
+V:
+1 67 27 27
+57 57 1 1
+
+C = V
+```
+
+The parser materializes `C` as its own `Section`, copies `V`'s bars into it, and
+sets:
+
+```python
+harmony.sections["C"].alias_of == "V"
+```
+
+This also works for numbered variants such as `A3 = A2`. Alias targets must
+appear earlier in the file. Ordinary sections omit `alias_of` from normalized
+JSON, so existing expected-output fixtures remain unchanged.
+
 ## Running tests
 
 From the repository root:
@@ -120,6 +144,8 @@ The tests cover:
 - whole-bar continuation dots;
 - A1/A2/B/A3 form resolution;
 - reuse of a single `A:` section;
+- section aliases such as `C = V` and `A3 = A2`;
+- rejection of forward/undefined alias targets;
 - rejection of incomplete numbered form variants;
 - rejection of compressed dot syntax.
 

@@ -70,6 +70,38 @@ The parser does not guess incomplete numbered sequences. With `Form: AABA`, for
 example, `A1` and `A2` without `A3` is an error. Mixing `A:` with `A1:`/`A2:` is
 also an error.
 
+### Section aliases
+
+When a formally distinct section has exactly the same harmony as an earlier
+section, it may inherit that harmony instead of duplicating the bars:
+
+```text
+Form: VC
+
+V:
+1   67   27   27
+57  57   1    1
+
+C = V
+```
+
+`C = V` means that `C` is a distinct formal section whose harmonic bars are
+identical to `V`. The normalized parser output expands those bars under `C` and
+records `alias_of: "V"`. This is useful for cases such as a simple verse-chorus
+tune in which verse and chorus have the same harmonic realization.
+
+Aliases are general, so numbered formal variants may also inherit earlier
+variants:
+
+```text
+A3 = A2
+```
+
+An alias may refer only to a section that appears earlier in the file. This
+keeps references unambiguous and prevents circular aliases. Aliasing applies to
+harmonic content only; the aliased label remains formally distinct for form,
+lyrics, and other downstream annotations.
+
 ## 3. Ordinary bars
 
 Outside parentheses, each whitespace-separated harmonic token is one bar.
