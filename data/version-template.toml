@@ -1,0 +1,35 @@
+title = "[Tune Title]"
+tune_id = "[tune_id]"
+version_id = "[artist_or_source_year]"
+
+artist = "[Artist / ensemble]"
+recorded = "YYYY-MM-DD"
+
+release = "[Source release used for transcription]"
+release_label = "[Label / imprint]"
+release_date = "YYYY-MM-DD"
+track = 1
+
+#original_release = "[Original release title]"
+#original_release_label = "[Original label]"
+#original_release_date = "YYYY-MM-DD"
+#original_release_track = "1"
+
+harmony = "[harmony_id]"
+melody = "[melody_id]"
+
+comment = "[Free-form notes about this particular recording / realization.]"
+
+form = "[recording-level form, e.g. A3_I AABA_V AA_I]"
+
+[form_map]
+# Add only the compound formal units used in the form string.
+# AABA = "A1 A2 B A3"
+# VC = "V1 C"
+
+
+[realization]
+key = "[Key]"
+meter = "[Meter]"
+tempo = 0
+feel = "[Straight or Swing]"
