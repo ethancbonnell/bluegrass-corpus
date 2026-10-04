@@ -1,0 +1,11 @@
+% Title: Parser Feature Test
+% TuneID: test01
+% This line is a human comment and is ignored by the parser.
+
+Form: AB
+
+A:
+1   57   (1 4)   (1 . . 4)
+
+B:
+b7   6-7   (1 4 .)   (. 4)   5/7   .

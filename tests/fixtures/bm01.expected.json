@@ -1,0 +1,789 @@
+{
+  "title": "Blue Moon of Kentucky",
+  "tune_id": "bm01",
+  "form": "AABA",
+  "form_sections": [
+    "A1",
+    "A2",
+    "B",
+    "A3"
+  ],
+  "metadata": {
+    "Title": "Blue Moon of Kentucky",
+    "TuneID": "bm01"
+  },
+  "sections": {
+    "A1": {
+      "label": "A1",
+      "bars": [
+        {
+          "number": 1,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "raw": "57",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "57",
+                "root": "5",
+                "root_degree": 5,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [
+                  "7"
+                ],
+                "bass": "5",
+                "bass_degree": 5,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "raw": "57",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "57",
+                "root": "5",
+                "root_degree": 5,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [
+                  "7"
+                ],
+                "bass": "5",
+                "bass_degree": 5,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "A2": {
+      "label": "A2",
+      "bars": [
+        {
+          "number": 1,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "raw": "17",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "17",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [
+                  "7"
+                ],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "raw": "57",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "57",
+                "root": "5",
+                "root_degree": 5,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [
+                  "7"
+                ],
+                "bass": "5",
+                "bass_degree": 5,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "raw": "17",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "17",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [
+                  "7"
+                ],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "B": {
+      "label": "B",
+      "bars": [
+        {
+          "number": 1,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "raw": "57",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "57",
+                "root": "5",
+                "root_degree": 5,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [
+                  "7"
+                ],
+                "bass": "5",
+                "bass_degree": 5,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "A3": {
+      "label": "A3",
+      "bars": [
+        {
+          "number": 1,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "raw": "17",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "17",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [
+                  "7"
+                ],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "raw": "4",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "4",
+                "root": "4",
+                "root_degree": 4,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "4",
+                "bass_degree": 4,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "raw": "57",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "57",
+                "root": "5",
+                "root_degree": 5,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [
+                  "7"
+                ],
+                "bass": "5",
+                "bass_degree": 5,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "raw": "1",
+          "subdivisions": 1,
+          "events": [
+            {
+              "slot": 0,
+              "position": "0/1",
+              "chord": {
+                "raw": "1",
+                "root": "1",
+                "root_degree": 1,
+                "root_alteration": 0,
+                "quality": "major",
+                "modifiers": [],
+                "bass": "1",
+                "bass_degree": 1,
+                "bass_alteration": 0,
+                "bass_explicit": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
