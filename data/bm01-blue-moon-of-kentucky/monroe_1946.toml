@@ -1,0 +1,34 @@
+title = "Blue Moon of Kentucky"
+tune_id = "bm01"
+version_id = "monroe_1946"
+
+artist = "Bill Monroe and His Blue Grass Boys"
+recorded = "1946-09-16"
+source_release = "The Essential Bill Monroe and His Blue Grass Boys: 1945–1949"
+source_track = 11
+
+original_release = "Columbia 37888"
+original_release_date = "1947-09-22"
+original_release_format = "78 rpm"
+original_release_pairing = "Goodbye Old Pal / Blue Moon of Kentucky"
+
+harmony = "bm01"
+melody = "bm01"
+
+comment = """
+Notes about this particular recording can go here.
+These may eventually appear on the tune webpage.
+"""
+
+form = "A3_I AABA_V AA_I AA_V AA_I BA_V"
+
+[form_map]
+AABA = "A1 A2 B A3"
+AA = "A1 A3"
+BA = "B A3"
+
+[realization]
+key = "Bb"
+meter = "3/4"
+tempo = 105
+feel = "Swing"
