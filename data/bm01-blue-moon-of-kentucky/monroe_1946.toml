@@ -5,10 +5,10 @@ version_id = "monroe_1946"
 artist = "Bill Monroe and His Blue Grass Boys"
 recorded = "1946-09-16"
 
-source_release = "The Essential Bill Monroe and His Blue Grass Boys: 1945–1949"
-source_release_label = "Columbia/Legacy"
-source_release_date = "1992-10-20"
-source_track = 11
+release = "The Essential Bill Monroe and His Blue Grass Boys: 1945–1949"
+release_label = "Columbia/Legacy"
+release_date = "1992-10-20"
+release_track = 11
 
 original_release = "Goodbye Old Pal / Blue Moon of Kentucky"
 original_release_label = "Columbia"
@@ -18,7 +18,7 @@ original_release_track = "B"
 harmony = "bm01"
 melody = "bm01"
 
-comment = "This recording follows a relatively straightforward layout in the traditional waltz style. The Boys emphasize I7 going to the IV."
+comment = "This recording follows a somewhat meandering structure, with all solos taken over the first half of the form. Unlike later recordings where the Boys switch to a 4 feel after one pass, here they stay in a waltz feel throughout. Intro over the last 8."
 
 form = "A3_I AABA_V AA_I AA_V AA_I BA_V"
 
