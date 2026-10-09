@@ -16,6 +16,8 @@ Current v1 assumptions
   A1/A2/A3 are matched to repeated A occurrences in order.
 * A section may alias an earlier section with ``C = V`` or ``A3 = A2``;
   aliases remain distinct formal sections while inheriting harmonic bars.
+* ``Region: 4`` inside a section changes the local tonic region for subsequent
+  bars.  Every named section starts in region ``1`` unless changed explicitly.
 * Outside parentheses, each whitespace-separated token is one bar.
 * Inside parentheses, each whitespace-separated token is one equal slot in
   the bar.  A chord token creates an onset; ``.`` occupies a slot but creates
@@ -125,6 +127,7 @@ class Bar:
     number: int
     raw: str
     subdivisions: int
+    region: str = "1"
     events: list[ChordEvent] = field(default_factory=list)
 
 
@@ -180,6 +183,7 @@ class HarmonyData:
                     "bars": [
                         {
                             "number": bar.number,
+                            "region": bar.region,
                             "raw": bar.raw,
                             "subdivisions": bar.subdivisions,
                             "events": [
@@ -218,6 +222,7 @@ _SECTION_RE = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*)\s*:\s*$")
 _SECTION_ALIAS_RE = re.compile(
     r"^([A-Za-z][A-Za-z0-9_-]*)\s*=\s*([A-Za-z][A-Za-z0-9_-]*)\s*$"
 )
+_REGION_RE = re.compile(r"^Region\s*:\s*(.*?)\s*$", re.IGNORECASE)
 
 # A scale-degree string is intentionally a small language.  We accept repeated
 # accidentals because supporting bb7/##4 costs essentially nothing, even if
@@ -439,7 +444,7 @@ def _tokenize_bars(lines: Sequence[tuple[int, str]], *, section: str) -> list[_B
     return tokens
 
 
-def _parse_bar(token: _BarToken, *, number: int) -> Bar:
+def _parse_bar(token: _BarToken, *, number: int, region: str = "1") -> Bar:
     """Parse one top-level bar expression into exact onset events."""
 
     text = token.text.strip()
@@ -448,7 +453,13 @@ def _parse_bar(token: _BarToken, *, number: int) -> Bar:
 
     if text == ".":
         # Whole-bar continuation: one slot, no explicit onset.
-        return Bar(number=number, raw=text, subdivisions=1, events=[])
+        return Bar(
+            number=number,
+            raw=text,
+            subdivisions=1,
+            region=region,
+            events=[],
+        )
 
     if text.startswith("("):
         if not text.endswith(")"):
@@ -491,6 +502,7 @@ def _parse_bar(token: _BarToken, *, number: int) -> Bar:
             number=number,
             raw=text,
             subdivisions=subdivisions,
+            region=region,
             events=events,
         )
 
@@ -504,8 +516,57 @@ def _parse_bar(token: _BarToken, *, number: int) -> Bar:
         number=number,
         raw=text,
         subdivisions=1,
+        region=region,
         events=[ChordEvent(slot=0, position=Fraction(0, 1), chord=chord)],
     )
+
+
+def _parse_section_bars(
+    lines: Sequence[tuple[int, str]], *, section: str
+) -> list[Bar]:
+    """Parse a section while applying zero-duration ``Region:`` directives.
+
+    Each named section begins in region ``1``.  ``Region: X`` changes the local
+    tonic region for subsequent bars in that section until another region
+    directive appears.  Region values use the same scale-degree spelling rules
+    as chord roots (for example ``4``, ``b7``, or ``#4``).
+    """
+
+    bars: list[Bar] = []
+    pending_lines: list[tuple[int, str]] = []
+    current_region = "1"
+
+    def flush_pending() -> None:
+        nonlocal pending_lines
+        if not pending_lines:
+            return
+
+        bar_tokens = _tokenize_bars(pending_lines, section=section)
+        for token in bar_tokens:
+            bars.append(
+                _parse_bar(
+                    token,
+                    number=len(bars) + 1,
+                    region=current_region,
+                )
+            )
+        pending_lines = []
+
+    for line_no, line_text in lines:
+        stripped = line_text.strip()
+        region_match = _REGION_RE.fullmatch(stripped)
+        if region_match:
+            flush_pending()
+            region_text = region_match.group(1).strip()
+            if not region_text:
+                raise HarmonyParseError("Region may not be empty", line=line_no)
+            current_region = parse_scale_degree(region_text, line=line_no).text
+            continue
+
+        pending_lines.append((line_no, line_text))
+
+    flush_pending()
+    return bars
 
 
 def _form_symbols(form: str) -> list[str]:
@@ -634,6 +695,16 @@ def parse_harmony_text(text: str, *, source: str = "<string>") -> HarmonyData:
             current_section = None
             continue
 
+        region_match = _REGION_RE.fullmatch(stripped)
+        if region_match:
+            if current_section is None:
+                raise HarmonyParseError(
+                    "Region directive appears outside a named section",
+                    line=line_no,
+                )
+            section_lines[current_section].append((line_no, original_line))
+            continue
+
         section_match = _SECTION_RE.fullmatch(stripped)
         if section_match:
             label = section_match.group(1)
@@ -703,13 +774,9 @@ def parse_harmony_text(text: str, *, source: str = "<string>") -> HarmonyData:
             continue
 
         lines = section_lines[label]
-        bar_tokens = _tokenize_bars(lines, section=label)
-        if not bar_tokens:
+        bars = _parse_section_bars(lines, section=label)
+        if not bars:
             raise HarmonyParseError(f"section {label!r} contains no bars")
-        bars = [
-            _parse_bar(token, number=index)
-            for index, token in enumerate(bar_tokens, start=1)
-        ]
         sections[label] = Section(label=label, bars=bars)
 
     form_sections = _resolve_form_sections(form, sections.keys())

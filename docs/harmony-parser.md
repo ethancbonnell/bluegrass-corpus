@@ -122,7 +122,34 @@ harmony.sections["C"].alias_of == "V"
 
 This also works for numbered variants such as `A3 = A2`. Alias targets must
 appear earlier in the file. Ordinary sections omit `alias_of` from normalized
-JSON, so existing expected-output fixtures remain unchanged.
+JSON.
+
+## Tonic-region model
+
+Every parsed bar carries a local tonic region:
+
+```python
+harmony.sections["A1"].bars[0].region == "1"
+```
+
+The source need not write `Region: 1`; region 1 is the default at the beginning
+of every named section. A directive inside a section changes the region for
+subsequent bars without consuming a bar:
+
+```text
+B:
+1 1
+Region: 4
+1 5
+```
+
+This produces four bars with regions `1, 1, 4, 4`. A later `Region: 1` returns
+to the global region. Region values use the scale-degree parser, so altered
+regions such as `b7` are supported and Unicode accidentals are normalized.
+
+Aliases copy the already-resolved bar regions along with the harmonic content.
+Because `region` is now explicit on every normalized bar, the existing expected
+JSON fixtures must include `"region": "1"` for ordinary bars.
 
 ## Running tests
 
@@ -142,6 +169,10 @@ The tests cover:
 - two-, three-, and four-slot within-bar timing;
 - delayed first onsets;
 - whole-bar continuation dots;
+- default region `1` on every bar;
+- sectional and mid-section `Region:` changes;
+- region reset at named-section boundaries;
+- altered regions and region inheritance through aliases;
 - A1/A2/B/A3 form resolution;
 - reuse of a single `A:` section;
 - section aliases such as `C = V` and `A3 = A2`;

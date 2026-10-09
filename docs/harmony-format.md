@@ -102,6 +102,58 @@ keeps references unambiguous and prevents circular aliases. Aliasing applies to
 harmonic content only; the aliased label remains formally distinct for form,
 lyrics, and other downstream annotations.
 
+### Tonic regions
+
+Chord numbers are interpreted relative to a local tonic region. Every named
+section begins in the global region `1` unless a different region is declared:
+
+```text
+B:
+Region: 4
+1   1   4   4
+5   5   1   1
+```
+
+Here the chord `1` means the tonic of region 4 rather than the global tonic.
+`Region:` is a zero-duration directive: it does not create a bar, and it applies
+to every following bar in the same section until another `Region:` directive or
+the end of the section.
+
+Mid-section changes are therefore legal:
+
+```text
+B:
+1   1   4   4
+Region: 4
+1   1   5   5
+Region: 1
+4   5   1   1
+```
+
+Region values use the same scale-degree spelling rules as chord roots, so `4`,
+`b7`, and `#4` are valid. They are always understood relative to the tune's
+global tonic, not recursively relative to the preceding region. Each new named
+section resets to region `1`; this keeps sections self-contained when they are
+reused or aliased.
+
+`Region:` is for an established local tonic region, not for every applied chord
+or brief tonicization. For example, `27` may remain a II7 chord within region 1
+without requiring `Region: 2`.
+
+The normalized parser output records the active region on every bar, including
+ordinary bars in the global region:
+
+```json
+{
+  "number": 1,
+  "region": "1",
+  "raw": "1"
+}
+```
+
+The absolute starting key remains version-specific data (for example in the
+version TOML). The `.harm` file records the relative harmonic region.
+
 ## 3. Ordinary bars
 
 Outside parentheses, each whitespace-separated harmonic token is one bar.

@@ -6,6 +6,7 @@ needs no test dependency just to verify the parser.
 
 from __future__ import annotations
 
+import json
 import sys
 import unittest
 from fractions import Fraction
@@ -96,6 +97,134 @@ class BarTimingTests(unittest.TestCase):
         bar = self.data.sections["B"].bars[5]
         self.assertEqual(bar.subdivisions, 1)
         self.assertEqual(bar.events, [])
+
+    def test_default_region_is_global_one(self) -> None:
+        self.assertTrue(
+            all(
+                bar.region == "1"
+                for section in self.data.sections.values()
+                for bar in section.bars
+            )
+        )
+
+
+class RegionTests(unittest.TestCase):
+    def test_region_directive_changes_subsequent_bars_without_adding_a_bar(self) -> None:
+        data = parse_harmony_text(
+            """% Title: Region Test
+% TuneID: region01
+Form: A
+A:
+1 4
+Region: 5
+1 4
+Region: b7
+1
+"""
+        )
+        bars = data.sections["A"].bars
+        self.assertEqual([bar.number for bar in bars], [1, 2, 3, 4, 5])
+        self.assertEqual([bar.raw for bar in bars], ["1", "4", "1", "4", "1"])
+        self.assertEqual([bar.region for bar in bars], ["1", "1", "5", "5", "b7"])
+
+    def test_region_resets_to_one_at_each_named_section(self) -> None:
+        data = parse_harmony_text(
+            """% Title: Region Reset Test
+% TuneID: region02
+Form: AB
+A:
+Region: 4
+1 5
+B:
+1 5
+"""
+        )
+        self.assertEqual([bar.region for bar in data.sections["A"].bars], ["4", "4"])
+        self.assertEqual([bar.region for bar in data.sections["B"].bars], ["1", "1"])
+
+    def test_region_accepts_unicode_accidental_and_normalizes_it(self) -> None:
+        data = parse_harmony_text(
+            """% Title: Altered Region Test
+% TuneID: region03
+Form: A
+A:
+Region: ♭7
+1
+"""
+        )
+        self.assertEqual(data.sections["A"].bars[0].region, "b7")
+
+    def test_alias_inherits_resolved_regions(self) -> None:
+        data = parse_harmony_text(
+            """% Title: Region Alias Test
+% TuneID: region04
+Form: VC
+V:
+1
+Region: 4
+5 1
+C = V
+"""
+        )
+        self.assertEqual(
+            [bar.region for bar in data.sections["V"].bars],
+            ["1", "4", "4"],
+        )
+        self.assertEqual(
+            [bar.region for bar in data.sections["C"].bars],
+            ["1", "4", "4"],
+        )
+
+    def test_region_is_serialized_on_every_bar(self) -> None:
+        data = parse_harmony_text(
+            """% Title: Region JSON Test
+% TuneID: region05
+Form: A
+A:
+1
+Region: 4
+1
+"""
+        ).to_dict()
+        self.assertEqual(data["sections"]["A"]["bars"][0]["region"], "1")
+        self.assertEqual(data["sections"]["A"]["bars"][1]["region"], "4")
+
+    def test_invalid_region_is_error(self) -> None:
+        with self.assertRaisesRegex(HarmonyParseError, "invalid scale degree"):
+            parse_harmony_text(
+                """% Title: Bad Region Test
+% TuneID: region06
+Form: A
+A:
+Region: 57
+1
+"""
+            )
+
+    def test_region_outside_section_is_error(self) -> None:
+        with self.assertRaisesRegex(HarmonyParseError, "outside a named section"):
+            parse_harmony_text(
+                """% Title: Bad Region Placement
+% TuneID: region07
+Form: A
+Region: 4
+A:
+1
+"""
+            )
+
+
+class ExpectedJsonTests(unittest.TestCase):
+    def _assert_fixture_matches_expected(self, stem: str) -> None:
+        actual = parse_harmony(FIXTURES / f"{stem}.harm").to_dict()
+        expected = json.loads((FIXTURES / f"{stem}.expected.json").read_text())
+        self.assertEqual(actual, expected)
+
+    def test_bm01_expected_json(self) -> None:
+        self._assert_fixture_matches_expected("bm01")
+
+    def test_parser_features_expected_json(self) -> None:
+        self._assert_fixture_matches_expected("parser_features")
 
 
 class FormTests(unittest.TestCase):
